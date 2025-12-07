@@ -24,72 +24,41 @@ nav a:hover {
   color: var(--link-hover);
 }
 
-/* Posts Grid */
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
+/* Dark theme specific styling */
 .post-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--card-bg);
   border: 1px solid #444;
-  border-radius: 8px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .post-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.post-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.post-content {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 .post-date {
-  font-size: 0.85rem;
   color: #999;
-  margin-bottom: 0.5rem;
-}
-
-.post-card h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-color);
-  font-size: 1.3rem;
-  line-height: 1.3;
 }
 
 .post-subtitle {
-  margin: 0 0 0.75rem 0;
   color: #aaa;
-  font-size: 0.95rem;
-  font-weight: 500;
 }
 
 .post-summary {
-  margin: 0;
   color: #aaa;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  flex: 1;
+}
+
+.posts-controls {
+  background: var(--card-bg);
+  border: 1px solid #444;
+}
+
+.control-group select {
+  border: 1px solid #555;
+  background: #1a1a1a;
+}
+
+.post-tag {
+  background: #1a3a52;
+  color: var(--primary-color);
 }
 
 /* Global link styles for better contrast in dark theme */
@@ -113,4 +82,3 @@ a:focus {
 a:active {
   color: var(--primary-color);
 }
-

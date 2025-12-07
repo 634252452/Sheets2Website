@@ -42,74 +42,58 @@ footer {
   border-top: 2px solid rgba(99, 102, 241, 0.1);
 }
 
-/* Posts Grid */
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
+/* Modern theme specific styling */
 .post-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--card-bg);
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .post-card:hover {
-  transform: translateY(-4px);
   border-color: var(--primary-color);
   box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
 }
 
-.post-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.post-content {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 .post-date {
-  font-size: 0.85rem;
   color: var(--footer-color);
-  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
 .post-card h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-color);
-  font-size: 1.3rem;
-  line-height: 1.3;
   font-weight: 600;
 }
 
 .post-subtitle {
-  margin: 0 0 0.75rem 0;
   color: #6b7280;
-  font-size: 0.95rem;
-  font-weight: 500;
 }
 
 .post-summary {
-  margin: 0;
   color: #6b7280;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  flex: 1;
 }
 
+.posts-controls {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.control-group select {
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.control-group select:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.post-card {
+  border-radius: 12px;
+}
+
+.post-tag {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%);
+  color: var(--primary-color);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}

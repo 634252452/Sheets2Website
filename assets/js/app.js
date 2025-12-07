@@ -4,7 +4,7 @@ import { renderSiteHeader, renderPageContent, renderFooter } from './renderer.js
 import { getCached } from './cache.js';
 import { currentPageId } from './router.js';
 import { loadTemplate, getSavedTemplate } from './template.js';
-import { getPosts, getPages } from './posts.js';
+import { getPosts, getPages, sortPostsByDate, getUniqueTags, getUniqueCategories, filterPostsByTag, filterPostsByCategory } from './posts.js';
 import { safeHTML } from './utils.js';
 
 // Global application state
@@ -85,46 +85,132 @@ function mount() {
 }
 
 /**
- * Render posts list
+ * Render posts list with filters and sorting
  * @param {HTMLElement} targetEl - Main element
  * @param {Array} posts - Posts array
  */
 function renderPostsList(targetEl, posts) {
   let html = '<h2>Posts</h2>';
+  
   if (!posts.length) {
     html += '<p>No available posts.</p>';
-  } else {
-    html += '<div class="posts-grid">';
-    posts.forEach(post => {
-      const title = post.title || post.id;
-      const subtitle = post.subtitle ? `<p class="post-subtitle">${safeHTML(post.subtitle)}</p>` : '';
-      const image = post.featured_image ? `<img src="${safeHTML(post.featured_image)}" alt="${safeHTML(title)}" class="post-image">` : '';
-      const summary = post.summary ? `<p class="post-summary">${safeHTML(post.summary)}</p>` : '';
-      const date = post.creation_date ? `<span class="post-date">${safeHTML(post.creation_date)}</span>` : '';
-      
-      // Parse and render tags (comma-separated)
-      const tagsHtml = post.tags 
-        ? `<div class="post-tags">${post.tags.split(',').map(tag => `<span class="post-tag">${safeHTML(tag.trim())}</span>`).join('')}</div>`
-        : '';
-      
-      // Render category if present
-      const categoryHtml = post.category ? `<span class="post-category">${safeHTML(post.category)}</span>` : '';
-      
-      html += `
-        <a href="#${post.id}" class="post-card">
-          ${image}
-          <div class="post-content">
-            ${date}
-            <h3>${safeHTML(title)}</h3>
-            ${subtitle}
-            ${summary}
-            ${tagsHtml}
-            ${categoryHtml}
-          </div>
-        </a>
-      `;
-    });
-    html += '</div>';
+    targetEl.innerHTML = html;
+    return;
   }
+  
+  // Get unique tags and categories
+  const allTags = getUniqueTags(posts);
+  const allCategories = getUniqueCategories(posts);
+  
+  // Create controls container
+  html += '<div class="posts-controls">';
+  
+  // Sorting control
+  html += `
+    <div class="control-group">
+      <label for="sort-order">Sort by date:</label>
+      <select id="sort-order">
+        <option value="desc">Newest First</option>
+        <option value="asc">Oldest First</option>
+      </select>
+    </div>
+  `;
+  
+  // Tags filter
+  if (allTags.length > 0) {
+    html += `
+      <div class="control-group">
+        <label for="filter-tags">Filter by tag:</label>
+        <select id="filter-tags">
+          <option value="">All Tags</option>
+          ${allTags.map(tag => `<option value="${safeHTML(tag)}">${safeHTML(tag)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  }
+  
+  // Categories filter
+  if (allCategories.length > 0) {
+    html += `
+      <div class="control-group">
+        <label for="filter-category">Filter by category:</label>
+        <select id="filter-category">
+          <option value="">All Categories</option>
+          ${allCategories.map(cat => `<option value="${safeHTML(cat)}">${safeHTML(cat)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  }
+  
+  html += '</div>';
+  
+  // Posts grid container
+  html += '<div class="posts-grid" id="posts-grid"></div>';
+  
   targetEl.innerHTML = html;
+  
+  // Function to update posts display
+  function updatePostsDisplay() {
+    const sortOrder = document.getElementById('sort-order')?.value || 'desc';
+    const selectedTag = document.getElementById('filter-tags')?.value || '';
+    const selectedCategory = document.getElementById('filter-category')?.value || '';
+    
+    // Apply filters
+    let filtered = posts;
+    if (selectedTag) {
+      filtered = filterPostsByTag(filtered, selectedTag);
+    }
+    if (selectedCategory) {
+      filtered = filterPostsByCategory(filtered, selectedCategory);
+    }
+    
+    // Apply sorting
+    filtered = sortPostsByDate(filtered, sortOrder);
+    
+    // Render filtered posts
+    let postsHtml = '';
+    if (filtered.length === 0) {
+      postsHtml = '<p>No posts match the selected filters.</p>';
+    } else {
+      filtered.forEach(post => {
+        const title = post.title || post.id;
+        const subtitle = post.subtitle ? `<p class="post-subtitle">${safeHTML(post.subtitle)}</p>` : '';
+        const image = post.featured_image ? `<img src="${safeHTML(post.featured_image)}" alt="${safeHTML(title)}" class="post-image">` : '';
+        const summary = post.summary ? `<p class="post-summary">${safeHTML(post.summary)}</p>` : '';
+        const date = post.creation_date ? `<span class="post-date">${safeHTML(post.creation_date)}</span>` : '';
+        
+        // Parse and render tags (comma-separated)
+        const tagsHtml = post.tags 
+          ? `<div class="post-tags">${post.tags.split(',').map(tag => `<span class="post-tag">${safeHTML(tag.trim())}</span>`).join('')}</div>`
+          : '';
+        
+        // Render category if present
+        const categoryHtml = post.category ? `<span class="post-category">${safeHTML(post.category)}</span>` : '';
+        
+        postsHtml += `
+          <a href="#${post.id}" class="post-card">
+            ${image}
+            <div class="post-content">
+              ${date}
+              <h3>${safeHTML(title)}</h3>
+              ${subtitle}
+              ${summary}
+              ${tagsHtml}
+              ${categoryHtml}
+            </div>
+          </a>
+        `;
+      });
+    }
+    
+    document.getElementById('posts-grid').innerHTML = postsHtml;
+  }
+  
+  // Add event listeners to controls
+  document.getElementById('sort-order')?.addEventListener('change', updatePostsDisplay);
+  document.getElementById('filter-tags')?.addEventListener('change', updatePostsDisplay);
+  document.getElementById('filter-category')?.addEventListener('change', updatePostsDisplay);
+  
+  // Initial display
+  updatePostsDisplay();
 }
