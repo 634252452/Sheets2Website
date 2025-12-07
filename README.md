@@ -60,11 +60,12 @@ The `webpages_csv_url` is set in your Site Sheet, not in config.json.
 | `page_title`            |   ❌     | Browser tab title (appears on browser tab)               |
 | `favicon_url`           |   ❌     | Favicon URL (relative or absolute)                       |
 | `footer`                |   ❌     | Footer text or HTML                                      |
+| `language`              |   ❌     | Language code (e.g. `it`, `en`, `fr`) - sets HTML lang   |
 
 **Example:**
 ```csv
-webpages_cache_version,webpages_csv_url,template,homepage_id,title,page_title,favicon_url
-v1,https://docs.google.com/spreadsheets/d/PAGES_SHEET_ID/gviz/tq?tqx=out:csv&sheet=Pages,default,home,My Site,My Site - Welcome to my site,/favicon.ico
+webpages_cache_version,webpages_csv_url,template,homepage_id,title,page_title,favicon_url,footer,language
+v1,https://docs.google.com/spreadsheets/d/PAGES_SHEET_ID/gviz/tqx=out:csv&sheet=Pages,default,home,My Site,My Site - Welcome to my site,/favicon.ico,<p>&copy; 2025 My Site. All rights reserved.</p>,it
 ```
 
 ### Pages Sheet (Content)

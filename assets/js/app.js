@@ -36,6 +36,11 @@ export async function initApp() {
       document.head.appendChild(link);
     }
 
+    // Set page language from Site Sheet
+    if (STATE.site?.[0]?.language) {
+      document.documentElement.lang = STATE.site[0].language;
+    }
+
     mount();
     window.addEventListener('hashchange', mount);
   } catch (e) {
