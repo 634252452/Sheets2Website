@@ -3,7 +3,7 @@ import { loadJSON, loadSiteAndPages } from './api.js';
 import { renderSiteHeader, renderPageContent, renderFooter } from './renderer.js';
 import { getCached } from './cache.js';
 import { currentPageId } from './router.js';
-import { loadTemplate } from './template.js';
+import { loadTemplate, getSavedTemplate } from './template.js';
 import { getPosts, getPages } from './posts.js';
 import { safeHTML } from './utils.js';
 
@@ -21,8 +21,9 @@ export async function initApp() {
     STATE.site = data.site;
     STATE.pages = data.pages;
 
-    // Load template from Site Sheet (first row contains site settings)
-    const templateName = STATE.site?.[0]?.template || 'default';
+    // Load template from localStorage (if saved) or from Site Sheet or default
+    const savedTemplate = getSavedTemplate();
+    const templateName = savedTemplate || STATE.site?.[0]?.template || 'default';
     await loadTemplate(templateName);
 
     // Set page title and favicon from Site Sheet

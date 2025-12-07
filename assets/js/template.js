@@ -62,3 +62,21 @@ export function getCurrentTemplate() {
   const templateLink = document.querySelector('link[data-template-css]');
   return templateLink ? templateLink.getAttribute('data-template-css') : DEFAULT_TEMPLATE;
 }
+
+/**
+ * Set template and save to localStorage
+ * @param {string} templateName - Name of the template
+ * @returns {Promise<void>}
+ */
+export async function setTemplate(templateName) {
+  await loadTemplate(templateName);
+  localStorage.setItem('selected-template', templateName);
+}
+
+/**
+ * Get saved template from localStorage or default
+ * @returns {string}
+ */
+export function getSavedTemplate() {
+  return localStorage.getItem('selected-template') || DEFAULT_TEMPLATE;
+}

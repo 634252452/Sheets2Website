@@ -52,6 +52,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  align-items: center;
 }
 
 nav a {
@@ -63,6 +64,31 @@ nav a {
 
 nav a:hover {
   opacity: 0.7;
+}
+
+/* Theme selector styles */
+.theme-selector {
+  margin-left: auto;
+}
+
+.theme-selector select {
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-selector select:hover {
+  border-color: var(--text-color);
+}
+
+.theme-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(11, 102, 195, 0.1);
 }
 
 /* Main content */
@@ -99,10 +125,20 @@ footer {
 
   nav {
     gap: 8px;
+    flex-direction: column;
   }
 
   nav a {
     margin-right: 0;
     font-size: 0.95rem;
+  }
+  
+  .theme-selector {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .theme-selector select {
+    width: 100%;
   }
 }

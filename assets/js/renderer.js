@@ -1,5 +1,6 @@
 // UI rendering functions for header, content, and footer
 import { safeHTML } from './utils.js';
+import { getAvailableTemplates, getCurrentTemplate, setTemplate } from './template.js';
 
 // Render site header with title and navigation menu
 /**
@@ -28,6 +29,32 @@ export function renderSiteHeader(targetEl, siteConfig, pages) {
     a.textContent = 'Posts';
     nav.appendChild(a);
   }
+  
+  // Add theme selector
+  const themeSelectorContainer = document.createElement('div');
+  themeSelectorContainer.className = 'theme-selector';
+  
+  const themesSelect = document.createElement('select');
+  themesSelect.id = 'theme-select';
+  themesSelect.setAttribute('aria-label', 'Seleziona tema');
+  
+  const availableThemes = getAvailableTemplates();
+  const currentTheme = getCurrentTemplate();
+  
+  availableThemes.forEach(theme => {
+    const option = document.createElement('option');
+    option.value = theme;
+    option.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+    option.selected = theme === currentTheme;
+    themesSelect.appendChild(option);
+  });
+  
+  themesSelect.addEventListener('change', async (e) => {
+    await setTemplate(e.target.value);
+  });
+  
+  themeSelectorContainer.appendChild(themesSelect);
+  nav.appendChild(themeSelectorContainer);
 }
 
 // Render the main content of a specific page
