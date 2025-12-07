@@ -64,6 +64,8 @@ export function renderPageContent(targetEl, page) {
     return;
   }
   let html = '';
+  // Show featured image at the top if present
+  if (page.featured_image) html += `<img src="${safeHTML(page.featured_image)}" alt="${safeHTML(page.title || 'Featured image')}" class="featured-image">`;
   if (page.title) html += `<h2>${safeHTML(page.title)}</h2>`;
   if (page.summary) html += `<p>${safeHTML(page.summary)}</p>`;
   // Support both `content` and legacy `content_html` field names.

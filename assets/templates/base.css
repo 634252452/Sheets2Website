@@ -102,6 +102,15 @@ main p {
   line-height: 1.8;
 }
 
+/* Featured image styles */
+main .featured-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 24px;
+  border-radius: var(--border-radius);
+  display: block;
+}
+
 /* Footer styles */
 footer {
   margin-top: 32px;
