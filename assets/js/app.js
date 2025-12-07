@@ -102,6 +102,14 @@ function renderPostsList(targetEl, posts) {
       const summary = post.summary ? `<p class="post-summary">${safeHTML(post.summary)}</p>` : '';
       const date = post.creation_date ? `<span class="post-date">${safeHTML(post.creation_date)}</span>` : '';
       
+      // Parse and render tags (comma-separated)
+      const tagsHtml = post.tags 
+        ? `<div class="post-tags">${post.tags.split(',').map(tag => `<span class="post-tag">${safeHTML(tag.trim())}</span>`).join('')}</div>`
+        : '';
+      
+      // Render category if present
+      const categoryHtml = post.category ? `<span class="post-category">${safeHTML(post.category)}</span>` : '';
+      
       html += `
         <a href="#${post.id}" class="post-card">
           ${image}
@@ -110,6 +118,8 @@ function renderPostsList(targetEl, posts) {
             <h3>${safeHTML(title)}</h3>
             ${subtitle}
             ${summary}
+            ${tagsHtml}
+            ${categoryHtml}
           </div>
         </a>
       `;

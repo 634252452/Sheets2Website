@@ -81,14 +81,14 @@ v1,https://docs.google.com/spreadsheets/d/PAGES_SHEET_ID/gviz/tqx=out:csv&sheet=
 | `featured_image` |   ❌     | Featured image URL (relative or absolute)     |
 | `creation_date`  |   ❌     | ISO date (YYYY-MM-DD)                        |
 | `last_update`    |   ❌     | ISO date (YYYY-MM-DD)                        |
-| `tags`           |   ❌     | Semicolon-separated tags                     |
+| `tags`           |   ❌     | Comma-separated tags                         |
 | `category`       |   ❌     | Category string                              |
 
 **Example:**
 ```csv
 id,type,title,subtitle,summary,content,featured_image,creation_date,last_update,tags,category
-home,page,Home,,Welcome,"<h1>Welcome</h1><p>Home page content.</p>",/images/home.jpg,2025-01-01,2025-12-04,"home;landing",general
-about,page,About Us,Our Story,Learn more,"<h1>About</h1><p>About content.</p>",/images/about.jpg,2025-01-15,2025-12-04,"about;team",general
+home,page,Home,,Welcome,"<h1>Welcome</h1><p>Home page content.</p>",/images/home.jpg,2025-01-01,2025-12-04,"home, landing",general
+about,page,About Us,Our Story,Learn more,"<h1>About</h1><p>About content.</p>",/images/about.jpg,2025-01-15,2025-12-04,"about, team",general
 ```
 
 ---
