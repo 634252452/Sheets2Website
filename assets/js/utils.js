@@ -47,3 +47,23 @@ export function safeHTML(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+// Inject HTML into a container and ensure any <script> tags are executed.
+export function injectHTML(container, html) {
+  if (!container) return;
+  container.innerHTML = html || '';
+  // Find script tags that were added via innerHTML and re-insert them so they execute.
+  const scripts = Array.from(container.querySelectorAll('script'));
+  for (const oldScript of scripts) {
+    const newScript = document.createElement('script');
+    // Copy attributes (type, src, async, module, etc.)
+    for (let i = 0; i < oldScript.attributes.length; i++) {
+      const attr = oldScript.attributes[i];
+      newScript.setAttribute(attr.name, attr.value);
+    }
+    // Preserve inline script content
+    newScript.text = oldScript.textContent;
+    // Replace the old script with the new one to trigger execution
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  }
+}

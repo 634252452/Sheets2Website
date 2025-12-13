@@ -125,7 +125,13 @@ about,page,About Us,Our Story,Learn more,"<h1>About</h1><p>About content.</p>",/
 
 - **`config.json` is private**: Added to `.gitignore`, never committed to git
 - **No backend required**: Everything runs in the browser
-- **Content HTML is not auto-sanitized**: Page `content` fields are injected as HTML. Ensure content is trusted or pre-sanitized. Titles and summaries are HTML-escaped.
+- **Content HTML and scripts**: Page `content` fields are injected as HTML and any `<script>` tags included in `content` will be executed by the renderer. Titles and summaries are HTML-escaped, but the `content` field is intentionally rendered raw to allow rich HTML/JS snippets.
+
+  **Security recommendations:**
+  - Use only trusted content in the Pages Sheet or sanitize content before publishing.
+  - Apply a strict Content Security Policy (CSP) if possible to limit script sources.
+  - Prefer server-side sanitization or remove script tags from untrusted inputs.
+  - Avoid allowing untrusted users to edit sheets that contain executable scripts.
 - **Site Sheet always fresh**: Fetched every load, ensuring up-to-date configuration
 
 ## Project Structure

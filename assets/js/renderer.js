@@ -1,5 +1,5 @@
 // UI rendering functions for header, content, and footer
-import { safeHTML } from './utils.js';
+import { safeHTML, injectHTML } from './utils.js';
 import { getAvailableTemplates, getCurrentTemplate, setTemplate } from './template.js';
 
 // Render site header with title and navigation menu
@@ -71,7 +71,8 @@ export function renderPageContent(targetEl, page) {
   // Support both `content` and legacy `content_html` field names.
   const contentHtml = page.content || page.content_html || '';
   if (contentHtml) html += `<div>${contentHtml}</div>`;
-  targetEl.innerHTML = html;
+  // Use injectHTML so any <script> tags inside `content` are executed.
+  injectHTML(targetEl, html);
 }
 
 // Render site footer with copyright or custom text
