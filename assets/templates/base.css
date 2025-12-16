@@ -106,7 +106,7 @@ main p {
 main .featured-image {
   max-width: 100%;
   height: auto;
-  margin-bottom: 24px;
+  margin: 0 auto 24px;
   border-radius: var(--border-radius);
   display: block;
 }
