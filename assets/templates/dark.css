@@ -1,0 +1,84 @@
+/* Dark template theme */
+
+:root {
+  --primary-color: #4da6ff;
+  --bg-color: #1a1a1a;
+  --card-bg: #2d2d2d;
+  --text-color: #e0e0e0;
+  --footer-color: #999;
+  --accent-color: #66b3ff;
+  --link-color: #58a6ff;
+  --link-visited: #9fbff0;
+  --link-hover: #7ec0ff;
+}
+
+header {
+  border-bottom-color: var(--primary-color);
+}
+
+nav a {
+  color: var(--link-color);
+}
+
+nav a:hover {
+  color: var(--link-hover);
+}
+
+/* Dark theme specific styling */
+.post-card {
+  border: 1px solid #444;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.post-date {
+  color: #999;
+}
+
+.post-subtitle {
+  color: #aaa;
+}
+
+.post-summary {
+  color: #aaa;
+}
+
+.posts-controls {
+  background: var(--card-bg);
+  border: 1px solid #444;
+}
+
+.control-group select {
+  border: 1px solid #555;
+  background: #1a1a1a;
+}
+
+.post-tag {
+  background: #1a3a52;
+  color: var(--primary-color);
+}
+
+/* Global link styles for better contrast in dark theme */
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover,
+a:focus {
+  color: var(--link-hover);
+  text-decoration: underline;
+  outline: 3px solid rgba(102, 179, 255, 0.12);
+  outline-offset: 3px;
+}
+
+a:active {
+  color: var(--primary-color);
+}

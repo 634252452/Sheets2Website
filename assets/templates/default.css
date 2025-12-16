@@ -1,0 +1,58 @@
+/* Default template theme */
+
+:root {
+  --primary-color: #0b66c3;
+  --bg-color: #f7f7f7;
+  --card-bg: #fff;
+  --text-color: #111;
+  --accent-color: #0d47a1;
+}
+
+header {
+  border-bottom-color: var(--primary-color);
+}
+
+nav a {
+  color: var(--primary-color);
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+/* Default theme specific styling */
+.post-card {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.post-date {
+  color: #999;
+}
+
+.post-subtitle {
+  color: #666;
+}
+
+.post-summary {
+  color: #666;
+}
+
+.posts-controls {
+  background: var(--card-bg);
+  border: 1px solid #e0e0e0;
+}
+
+.control-group select {
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.post-tag {
+  background: #e8f0fe;
+  color: var(--primary-color);
+}
