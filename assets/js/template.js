@@ -80,3 +80,16 @@ export async function setTemplate(templateName) {
 export function getSavedTemplate() {
   return localStorage.getItem('selected-template') || DEFAULT_TEMPLATE;
 }
+
+/**
+ * Get the template to load: from localStorage (if exists), or from siteSheet, or default
+ * @param {string} siteSheetTemplate - Template name from Site Sheet config
+ * @returns {string}
+ */
+export function getInitialTemplate(siteSheetTemplate) {
+  // If user has explicitly saved a template, use that
+  const saved = localStorage.getItem('selected-template');
+  if (saved) return saved;
+  // Otherwise use from siteSheet, fallback to default
+  return siteSheetTemplate || DEFAULT_TEMPLATE;
+}
