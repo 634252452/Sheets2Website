@@ -1,3 +1,5 @@
+![Sheets2Website Logo](assets/images/logo.png)
+
 # Sheets2Website
 
 Sheets2Website is a lightweight, zero-backend static website generator powered by **Google Sheets**. Manage all your site content in spreadsheets, and deploy instantly with dynamic templates, smart caching, and responsive design. No frameworks, no backend, just pure HTML/CSS/JS.
