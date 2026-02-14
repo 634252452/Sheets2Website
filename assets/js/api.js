@@ -4,7 +4,14 @@ import { getCached, setCached } from './cache.js';
 
 /**
  * Converts various Google Sheets input formats to a valid CSV export URL
- * Supports: CSV URLs, share URLs, or plain sheet IDs
+ * Supports: CSV URLs, gviz URLs, share URLs, export URLs, or plain sheet IDs
+ * 
+ * Examples:
+ * - Published: https://docs.google.com/spreadsheets/d/e/2PACX.../pub?output=csv
+ * - Export: https://docs.google.com/spreadsheets/d/[ID]/export?format=csv
+ * - Edit URL: https://docs.google.com/spreadsheets/d/[ID]/edit
+ * - Share URL: https://docs.google.com/spreadsheets/d/[ID]
+ * - Bare ID: [alphanumeric-with-dashes_and_underscores]
  */
 export function normalizeSheetUrl(input) {
   if (!input) throw new Error('Sheet URL or ID is required');
@@ -16,21 +23,31 @@ export function normalizeSheetUrl(input) {
     throw new Error('Config error: replace "SET_YOUR_SITE_SHEET_ID_HERE" in your config with your Google Sheet ID or URL');
   }
   
-  // Already a CSV export URL
-  if (trimmed.includes('/pub?output=csv')) {
+  // Already a working CSV export URL or gviz URL - return as-is
+  if (trimmed.includes('output=csv') || trimmed.includes('gviz/tq')) {
     return trimmed;
   }
   
-  // Share URL or edit URL - extract ID
-  const idMatch = trimmed.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-  if (idMatch) {
-    const sheetId = idMatch[1];
-    return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+  // Extract sheet ID from various Google Sheets URL formats
+  let sheetId = null;
+  
+  // Try /spreadsheets/d/[e/]ID patterns first (most common)
+  let match = trimmed.match(/\/spreadsheets\/d\/(?:e\/)?([a-zA-Z0-9\-_]+)/);
+  
+  // Fallback: try shorter /d/[e/]ID patterns
+  if (!match) {
+    match = trimmed.match(/\/d\/(?:e\/)?([a-zA-Z0-9\-_]+)/);
   }
   
-  // Just an ID
-  if (/^[a-zA-Z0-9-_]+$/.test(trimmed)) {
-    return `https://docs.google.com/spreadsheets/d/${trimmed}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+  if (match) {
+    sheetId = match[1];
+  } else if (/^[a-zA-Z0-9\-_]+$/.test(trimmed)) {
+    // Bare sheet ID (alphanumeric, dashes, underscores)
+    sheetId = trimmed;
+  }
+  
+  if (sheetId) {
+    return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
   }
   
   throw new Error(`Invalid sheet URL or ID format: ${input}`);
