@@ -305,6 +305,7 @@ footer {
 /* Content from HTML sheets - restore proper styles for text elements */
 .content {
   line-height: 1.7;
+  text-align: justify;
 }
 
 .content h2,
