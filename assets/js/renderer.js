@@ -70,7 +70,7 @@ export function renderPageContent(targetEl, page) {
   if (page.summary) html += `<p>${safeHTML(page.summary)}</p>`;
   // Support both `content` and legacy `content_html` field names.
   const contentHtml = page.content || page.content_html || '';
-  if (contentHtml) html += `<div>${contentHtml}</div>`;
+  if (contentHtml) html += `<div class="content">${contentHtml}</div>`;
   // Use injectHTML so any <script> tags inside `content` are executed.
   injectHTML(targetEl, html);
 }
