@@ -66,6 +66,30 @@ function mount() {
   // Pass all pages (both pages and posts) to the menu
   renderSiteHeader(siteHeader, STATE.site, STATE.pages);
 
+  // Setup hamburger menu toggle for mobile
+  const hamburgerToggle = document.getElementById('hamburger-toggle');
+  const nav = document.getElementById('site-nav');
+  
+  // Remove any existing listener by replacing the element
+  if (hamburgerToggle) {
+    const newHamburger = hamburgerToggle.cloneNode(true);
+    hamburgerToggle.parentNode.replaceChild(newHamburger, hamburgerToggle);
+    
+    newHamburger.addEventListener('click', () => {
+      newHamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+  }
+
+  // Close menu when a link is clicked
+  (nav?.querySelectorAll('a') || []).forEach(a => {
+    a.addEventListener('click', () => {
+      const hamburger = document.getElementById('hamburger-toggle');
+      hamburger?.classList.remove('active');
+      nav?.classList.remove('active');
+    });
+  });
+
   // Handle /posts route
   const hash = location.hash.replace(/^#/, '');
   if (hash === 'posts') {
