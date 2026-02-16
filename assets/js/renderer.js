@@ -12,7 +12,8 @@ import { getAvailableTemplates, getCurrentTemplate, setTemplate } from './templa
  */
 export function renderSiteHeader(targetEl, siteConfig, pages) {
   const title = (siteConfig && siteConfig[0] && siteConfig[0].title) || 'Sito';
-  targetEl.querySelector('h1').textContent = title;
+  const titleLink = targetEl.querySelector('#site-title-link');
+  if (titleLink) titleLink.textContent = title;
   const nav = targetEl.querySelector('#site-nav');
   nav.innerHTML = '';
   // Show only pages with type='page' in the menu
